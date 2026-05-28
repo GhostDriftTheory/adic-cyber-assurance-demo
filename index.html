@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ADIC Cyber Assurance for Financial AI Execution</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero" aria-label="ADIC execution gate overview">
+        <p class="eyebrow">ADIC Cyber Assurance for Financial AI Execution</p>
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="equation">AI指示 ≠ 実行権限</div>
+            <h1>AIの指示は、証拠が揃うまで実行されない。</h1>
+            <p class="subcopy">
+              普通のログ監視は「実行後に気づく」。ADIC Cyber Assurance は
+              「実行前に証拠を検証し、証拠が壊れていれば実行そのものを通さない」。
+            </p>
+          </div>
+          <aside class="hero-message">
+            <strong>AI-generated instructions are not executable authority.</strong>
+            <span>AIが出した指示は、それだけでは実行権限ではない。</span>
+          </aside>
+        </div>
+      </section>
+
+      <section class="execution-flow" aria-label="Execution gate flow">
+        <article class="flow-node compromised">
+          <span>01</span>
+          <strong>Compromised AI Instruction</strong>
+          <p>Attacker manipulates the financial AI agent.</p>
+        </article>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <article class="flow-node gate-node">
+          <span>02</span>
+          <strong>ADIC Execution Gate</strong>
+          <div class="gate-pills">
+            <b>Authority</b>
+            <b>Approval</b>
+            <b>Provenance</b>
+            <b>Replay Hash</b>
+            <b>Policy Version</b>
+          </div>
+        </article>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <article class="flow-node blocked">
+          <span>03</span>
+          <strong>NOT EXECUTABLE</strong>
+          <p>This AI instruction cannot become a banking operation.</p>
+        </article>
+      </section>
+
+      <section class="comparison" aria-label="Log monitoring versus ADIC">
+        <article class="comparison-card without">
+          <h2>普通のログ監視・SIEM</h2>
+          <ul>
+            <li>実行された後にログを見る</li>
+            <li>異常検知はできても、銀行システム変更を必ず止めるとは限らない</li>
+            <li>「なぜ通ったか」は後から調査になる</li>
+          </ul>
+        </article>
+        <article class="comparison-card with">
+          <h2>ADIC Cyber Assurance</h2>
+          <ul>
+            <li>実行前に証拠チェーンを検証する</li>
+            <li>権限・承認・由来・再実行証跡が欠けたら実行不可</li>
+            <li>AIの提案を、そのまま銀行操作に変換させない</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="scenario-strip" aria-label="Scenario selector">
+        <button class="scenario-button" data-scenario="normal_credit_review">
+          <span class="scenario-icon">CR</span>
+          <span>Safe read-only credit check</span>
+        </button>
+        <button class="scenario-button" data-scenario="add_external_account">
+          <span class="scenario-icon">EA</span>
+          <span>Unauthorized external account attempt</span>
+        </button>
+        <button class="scenario-button" data-scenario="change_transfer_limit">
+          <span class="scenario-icon">TL</span>
+          <span>Unauthorized limit escalation</span>
+        </button>
+        <button class="scenario-button" data-scenario="approve_wire_transfer">
+          <span class="scenario-icon">WT</span>
+          <span>High-risk wire transfer attempt</span>
+        </button>
+        <button class="scenario-button active" data-scenario="suspicious_chain_execution">
+          <span class="scenario-icon">CX</span>
+          <span>Compromised AI attack chain</span>
+        </button>
+      </section>
+
+      <section class="demo-stage">
+        <article class="panel attack-panel">
+          <div class="panel-head">
+            <span class="panel-kicker">Compromised AI Instruction</span>
+            <strong id="scenario-name">Compromised AI attack chain</strong>
+          </div>
+          <div class="compromise-banner">
+            <span>Attempted conversion</span>
+            <strong id="attack-summary">AI instruction tries to become bank execution.</strong>
+          </div>
+          <ol class="attack-chain" id="attack-chain"></ol>
+        </article>
+
+        <article class="panel gate-panel">
+          <div class="panel-head">
+            <span class="panel-kicker">ADIC Execution Gate</span>
+            <strong>証拠が揃うまで実行不可</strong>
+          </div>
+          <div class="gate-stack" id="gate-stack"></div>
+        </article>
+
+        <article class="panel result-panel">
+          <div class="panel-head">
+            <span class="panel-kicker">Gate Decision</span>
+            <strong id="decision-label">NOT EXECUTABLE</strong>
+          </div>
+          <div class="decision-card reject" id="decision-card">
+            <span id="decision-code">NOT EXECUTABLE</span>
+            <strong id="decision-subline">This AI instruction cannot become a banking operation.</strong>
+            <p id="decision-reason">このAI指示は、銀行操作として実行できません。</p>
+          </div>
+          <div class="bank-state">
+            <span>Banking system state</span>
+            <strong id="bank-state-label">UNCHANGED</strong>
+            <p id="bank-state-detail">No account, limit, or wire-transfer change reached core banking.</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="takeaway-band">
+        <div class="takeaway-main">
+          <span>Takeaway</span>
+          <strong>ADIC does not merely observe AI behavior.</strong>
+          <p>
+            It controls whether an AI-generated instruction is allowed to become real execution.
+          </p>
+        </div>
+        <div class="takeaway-ja">
+          <strong>ADICはAIの動きを後から眺める仕組みではない。</strong>
+          <p>AIの指示が、現実の実行になってよいかを事前に判定する仕組みである。</p>
+        </div>
+      </section>
+
+      <section class="lean-band">
+        <p>
+          The replay-verification core behind this execution gate is supported by a Lean formal proof.
+        </p>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
