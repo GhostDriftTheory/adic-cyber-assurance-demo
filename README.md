@@ -25,6 +25,11 @@ Attacker manipulates AI agent
 
 Open `index.html` in a browser.
 
+## Related Links
+
+- Press release: [https://prtimes.jp/main/html/rd/p/000000003.000182721.html](https://prtimes.jp/main/html/rd/p/000000003.000182721.html)
+- GitHub repository: [https://github.com/GhostDriftTheory/adic-cyber-assurance-gateway/tree/main](https://github.com/GhostDriftTheory/adic-cyber-assurance-gateway/tree/main)
+
 ## Main Message
 
 ```text
