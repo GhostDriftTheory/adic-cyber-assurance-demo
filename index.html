@@ -4,56 +4,639 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ADIC Cyber Assurance for Financial AI Execution</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      :root {
+        --ink: #111827;
+        --muted: #607083;
+        --line: #d8e1ea;
+        --page: #f4f7fa;
+        --card: #ffffff;
+        --navy: #142d46;
+        --blue: #245fa8;
+        --red: #b42318;
+        --red-soft: #fff1f0;
+        --green: #1f7a55;
+        --green-soft: #edf8f2;
+        --amber: #b56a00;
+        --amber-soft: #fff7e8;
+        --shadow: 0 18px 48px rgba(21, 38, 59, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 20% 0%, rgba(36, 95, 168, 0.16), transparent 34%),
+          linear-gradient(180deg, #f7fafc 0%, #eef3f8 100%);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .shell {
+        width: min(1420px, 100%);
+        margin: 0 auto;
+        padding: 22px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+        gap: 18px;
+        align-items: stretch;
+        margin-bottom: 14px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .how-to,
+      .comparison-card,
+      .stage-card,
+      .scenario-panel,
+      .takeaway,
+      .lean-note {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 28px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .equation {
+        display: inline-block;
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        border: 1px solid rgba(180, 35, 24, 0.24);
+        border-radius: 8px;
+        background: var(--red-soft);
+        color: var(--red);
+        font-size: clamp(34px, 5vw, 70px);
+        font-weight: 950;
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin-bottom: 12px;
+        font-size: clamp(28px, 3.6vw, 44px);
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      .subcopy {
+        max-width: 880px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+
+      .hero-side {
+        display: grid;
+        align-content: center;
+        gap: 12px;
+        padding: 22px;
+        border-color: rgba(36, 95, 168, 0.24);
+      }
+
+      .hero-side strong {
+        font-size: 24px;
+        line-height: 1.22;
+      }
+
+      .hero-side p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .how-to {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 14px;
+        padding: 14px 16px;
+        box-shadow: none;
+      }
+
+      .how-to-label {
+        padding: 7px 10px;
+        border-radius: 7px;
+        background: var(--navy);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .steps li {
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: #fbfcfd;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .comparison-card {
+        padding: 16px;
+        box-shadow: none;
+      }
+
+      .comparison-card.log {
+        border-color: rgba(180, 35, 24, 0.22);
+        background: linear-gradient(180deg, #fff, #fff6f5);
+      }
+
+      .comparison-card.adic {
+        border-color: rgba(31, 122, 85, 0.3);
+        background: linear-gradient(180deg, #fff, var(--green-soft));
+      }
+
+      .comparison-card h2 {
+        margin-bottom: 8px;
+        font-size: 19px;
+      }
+
+      .comparison-card ul {
+        display: grid;
+        gap: 6px;
+        margin: 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .scenario-panel {
+        margin-bottom: 14px;
+        padding: 14px;
+        box-shadow: none;
+      }
+
+      .scenario-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .scenario-head h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .scenario-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .scenario-buttons {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .scenario-button {
+        min-height: 64px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .scenario-button b {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      .scenario-button span {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .scenario-button:hover,
+      .scenario-button:focus-visible,
+      .scenario-button.active {
+        border-color: var(--red);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.13);
+      }
+
+      .stage {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.95fr) minmax(360px, 1.25fr) minmax(300px, 1fr);
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .stage-card {
+        min-width: 0;
+        min-height: 490px;
+        overflow: hidden;
+      }
+
+      .card-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .card-head span {
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .card-head strong {
+        text-align: right;
+        overflow-wrap: anywhere;
+      }
+
+      .attack-summary {
+        margin: 16px;
+        padding: 15px;
+        border: 1px solid rgba(180, 35, 24, 0.28);
+        border-radius: 8px;
+        background: var(--red-soft);
+      }
+
+      .attack-summary span {
+        display: block;
+        margin-bottom: 7px;
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .attack-summary strong {
+        font-size: 20px;
+        line-height: 1.25;
+      }
+
+      .attack-chain {
+        display: grid;
+        gap: 9px;
+        margin: 0;
+        padding: 0 16px 16px;
+        list-style: none;
+        counter-reset: attack-step;
+      }
+
+      .attack-chain li {
+        counter-increment: attack-step;
+        position: relative;
+        min-height: 52px;
+        padding: 13px 13px 13px 52px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfd;
+        font-weight: 800;
+      }
+
+      .attack-chain li::before {
+        content: counter(attack-step);
+        position: absolute;
+        left: 12px;
+        top: 11px;
+        display: grid;
+        place-items: center;
+        width: 29px;
+        height: 29px;
+        border-radius: 7px;
+        background: var(--navy);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 950;
+      }
+
+      .gate-visual {
+        margin: 16px;
+        padding: 18px;
+        border: 2px solid rgba(36, 95, 168, 0.28);
+        border-radius: 8px;
+        background: #f7fafc;
+        text-align: center;
+      }
+
+      .gate-visual strong {
+        display: block;
+        color: var(--navy);
+        font-size: 24px;
+      }
+
+      .gate-visual p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .gate-list {
+        display: grid;
+        gap: 8px;
+        padding: 0 16px 16px;
+      }
+
+      .gate {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        align-items: center;
+        gap: 10px;
+        min-height: 58px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .gate-mark {
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 7px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 950;
+      }
+
+      .gate.pass .gate-mark {
+        background: var(--green);
+      }
+
+      .gate.fail .gate-mark {
+        background: var(--red);
+      }
+
+      .gate.review .gate-mark {
+        background: var(--amber);
+      }
+
+      .gate-name {
+        display: block;
+        font-weight: 850;
+      }
+
+      .gate-detail {
+        display: block;
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .gate-status {
+        min-width: 62px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
+        text-align: right;
+      }
+
+      .decision {
+        margin: 16px;
+        padding: 20px;
+        border: 1px solid rgba(180, 35, 24, 0.34);
+        border-radius: 8px;
+        background: var(--red-soft);
+      }
+
+      .decision.allow {
+        border-color: rgba(31, 122, 85, 0.34);
+        background: var(--green-soft);
+      }
+
+      .decision.review {
+        border-color: rgba(181, 106, 0, 0.34);
+        background: var(--amber-soft);
+      }
+
+      .decision-code {
+        display: block;
+        color: var(--red);
+        font-size: clamp(34px, 4.2vw, 58px);
+        font-weight: 950;
+        line-height: 1;
+      }
+
+      .decision.allow .decision-code {
+        color: var(--green);
+      }
+
+      .decision.review .decision-code {
+        color: var(--amber);
+      }
+
+      .decision-subline {
+        display: block;
+        margin-top: 12px;
+        font-size: 18px;
+        line-height: 1.35;
+      }
+
+      .decision-reason {
+        margin: 12px 0 0;
+        line-height: 1.6;
+      }
+
+      .bank-state {
+        margin: 0 16px 16px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .bank-state span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .bank-state strong {
+        display: block;
+        margin-top: 8px;
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 950;
+      }
+
+      .bank-state p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .takeaway {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 14px;
+        padding: 18px;
+        border-color: rgba(36, 95, 168, 0.28);
+      }
+
+      .takeaway div {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fbfcfd;
+      }
+
+      .takeaway span {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .takeaway strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 22px;
+        line-height: 1.3;
+      }
+
+      .takeaway p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .lean-note {
+        padding: 13px 16px;
+        box-shadow: none;
+      }
+
+      .lean-note p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 1120px) {
+        .hero,
+        .stage,
+        .comparison,
+        .takeaway {
+          grid-template-columns: 1fr;
+        }
+
+        .stage-card {
+          min-height: auto;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .shell {
+          padding: 14px;
+        }
+
+        .scenario-buttons {
+          grid-template-columns: 1fr;
+        }
+
+        .how-to {
+          grid-template-columns: 1fr;
+        }
+
+        .card-head {
+          display: grid;
+        }
+
+        .card-head strong {
+          text-align: left;
+        }
+      }
+    </style>
   </head>
   <body>
     <main class="shell">
       <section class="hero" aria-label="ADIC execution gate overview">
-        <p class="eyebrow">ADIC Cyber Assurance for Financial AI Execution</p>
-        <div class="hero-grid">
-          <div class="hero-copy">
-            <div class="equation">AI指示 ≠ 実行権限</div>
-            <h1>AIの指示は、証拠が揃うまで実行されない。</h1>
-            <p class="subcopy">
-              普通のログ監視は「実行後に気づく」。ADIC Cyber Assurance は
-              「実行前に証拠を検証し、証拠が壊れていれば実行そのものを通さない」。
-            </p>
-          </div>
-          <aside class="hero-message">
-            <strong>AI-generated instructions are not executable authority.</strong>
-            <span>AIが出した指示は、それだけでは実行権限ではない。</span>
-          </aside>
-        </div>
+        <article class="hero-main">
+          <p class="eyebrow">ADIC Cyber Assurance for Financial AI Execution</p>
+          <div class="equation">AI指示 ≠ 実行権限</div>
+          <h1>AIの指示は、証拠が揃うまで実行されない。</h1>
+          <p class="subcopy">
+            普通のログ監視は「実行後に気づく」。ADIC Cyber Assurance は、実行前に証拠を検証し、
+            証拠が壊れていれば実行そのものを通しません。
+          </p>
+        </article>
+        <aside class="hero-side">
+          <strong>AI-generated instructions are not executable authority.</strong>
+          <p>AIが出した指示は、それだけでは実行権限ではない。証拠チェーンが揃わない限り、銀行操作として実行できない。</p>
+        </aside>
       </section>
 
-      <section class="execution-flow" aria-label="Execution gate flow">
-        <article class="flow-node compromised">
-          <span>01</span>
-          <strong>Compromised AI Instruction</strong>
-          <p>Attacker manipulates the financial AI agent.</p>
-        </article>
-        <div class="flow-arrow" aria-hidden="true">↓</div>
-        <article class="flow-node gate-node">
-          <span>02</span>
-          <strong>ADIC Execution Gate</strong>
-          <div class="gate-pills">
-            <b>Authority</b>
-            <b>Approval</b>
-            <b>Provenance</b>
-            <b>Replay Hash</b>
-            <b>Policy Version</b>
-          </div>
-        </article>
-        <div class="flow-arrow" aria-hidden="true">↓</div>
-        <article class="flow-node blocked">
-          <span>03</span>
-          <strong>NOT EXECUTABLE</strong>
-          <p>This AI instruction cannot become a banking operation.</p>
-        </article>
+      <section class="how-to" aria-label="How to use this demo">
+        <span class="how-to-label">How to use</span>
+        <ol class="steps">
+          <li>1. 下のシナリオを選ぶ</li>
+          <li>2. ADIC Execution Gate の判定を見る</li>
+          <li>3. 銀行システム状態が変わったか確認する</li>
+        </ol>
       </section>
 
       <section class="comparison" aria-label="Log monitoring versus ADIC">
-        <article class="comparison-card without">
+        <article class="comparison-card log">
           <h2>普通のログ監視・SIEM</h2>
           <ul>
             <li>実行された後にログを見る</li>
@@ -61,7 +644,7 @@
             <li>「なぜ通ったか」は後から調査になる</li>
           </ul>
         </article>
-        <article class="comparison-card with">
+        <article class="comparison-card adic">
           <h2>ADIC Cyber Assurance</h2>
           <ul>
             <li>実行前に証拠チェーンを検証する</li>
@@ -71,59 +654,69 @@
         </article>
       </section>
 
-      <section class="scenario-strip" aria-label="Scenario selector">
-        <button class="scenario-button" data-scenario="normal_credit_review">
-          <span class="scenario-icon">CR</span>
-          <span>Safe read-only credit check</span>
-        </button>
-        <button class="scenario-button" data-scenario="add_external_account">
-          <span class="scenario-icon">EA</span>
-          <span>Unauthorized external account attempt</span>
-        </button>
-        <button class="scenario-button" data-scenario="change_transfer_limit">
-          <span class="scenario-icon">TL</span>
-          <span>Unauthorized limit escalation</span>
-        </button>
-        <button class="scenario-button" data-scenario="approve_wire_transfer">
-          <span class="scenario-icon">WT</span>
-          <span>High-risk wire transfer attempt</span>
-        </button>
-        <button class="scenario-button active" data-scenario="suspicious_chain_execution">
-          <span class="scenario-icon">CX</span>
-          <span>Compromised AI attack chain</span>
-        </button>
+      <section class="scenario-panel" aria-label="Scenario selector">
+        <div class="scenario-head">
+          <h2>シナリオを選択</h2>
+          <p>初期表示は、乗っ取られたAIによる連鎖実行攻撃です。</p>
+        </div>
+        <div class="scenario-buttons">
+          <button class="scenario-button" data-scenario="normal_credit_review">
+            <b>Safe read-only credit check</b>
+            <span>低リスクの参照のみ</span>
+          </button>
+          <button class="scenario-button" data-scenario="add_external_account">
+            <b>Unauthorized external account attempt</b>
+            <span>承認記録なし</span>
+          </button>
+          <button class="scenario-button" data-scenario="change_transfer_limit">
+            <b>Unauthorized limit escalation</b>
+            <span>実行権限なし</span>
+          </button>
+          <button class="scenario-button" data-scenario="approve_wire_transfer">
+            <b>High-risk wire transfer attempt</b>
+            <span>人間確認が必要</span>
+          </button>
+          <button class="scenario-button active" data-scenario="suspicious_chain_execution">
+            <b>Compromised AI attack chain</b>
+            <span>由来と再検証証跡が破損</span>
+          </button>
+        </div>
       </section>
 
-      <section class="demo-stage">
-        <article class="panel attack-panel">
-          <div class="panel-head">
-            <span class="panel-kicker">Compromised AI Instruction</span>
+      <section class="stage" aria-label="Financial AI execution gate demo">
+        <article class="stage-card">
+          <div class="card-head">
+            <span>Compromised AI Instruction</span>
             <strong id="scenario-name">Compromised AI attack chain</strong>
           </div>
-          <div class="compromise-banner">
+          <div class="attack-summary">
             <span>Attempted conversion</span>
             <strong id="attack-summary">AI instruction tries to become bank execution.</strong>
           </div>
           <ol class="attack-chain" id="attack-chain"></ol>
         </article>
 
-        <article class="panel gate-panel">
-          <div class="panel-head">
-            <span class="panel-kicker">ADIC Execution Gate</span>
+        <article class="stage-card">
+          <div class="card-head">
+            <span>ADIC Execution Gate</span>
             <strong>証拠が揃うまで実行不可</strong>
           </div>
-          <div class="gate-stack" id="gate-stack"></div>
+          <div class="gate-visual">
+            <strong>Instruction → Gate → Execution Decision</strong>
+            <p>Authority / Approval / Provenance / Replay Hash / Policy Version</p>
+          </div>
+          <div class="gate-list" id="gate-list"></div>
         </article>
 
-        <article class="panel result-panel">
-          <div class="panel-head">
-            <span class="panel-kicker">Gate Decision</span>
+        <article class="stage-card">
+          <div class="card-head">
+            <span>Gate Decision</span>
             <strong id="decision-label">NOT EXECUTABLE</strong>
           </div>
-          <div class="decision-card reject" id="decision-card">
-            <span id="decision-code">NOT EXECUTABLE</span>
-            <strong id="decision-subline">This AI instruction cannot become a banking operation.</strong>
-            <p id="decision-reason">このAI指示は、銀行操作として実行できません。</p>
+          <div class="decision reject" id="decision-card">
+            <span class="decision-code" id="decision-code">NOT EXECUTABLE</span>
+            <strong class="decision-subline" id="decision-subline">This AI instruction cannot become a banking operation.</strong>
+            <p class="decision-reason" id="decision-reason">このAI指示は、銀行操作として実行できません。</p>
           </div>
           <div class="bank-state">
             <span>Banking system state</span>
@@ -133,26 +726,208 @@
         </article>
       </section>
 
-      <section class="takeaway-band">
-        <div class="takeaway-main">
+      <section class="takeaway">
+        <div>
           <span>Takeaway</span>
           <strong>ADIC does not merely observe AI behavior.</strong>
-          <p>
-            It controls whether an AI-generated instruction is allowed to become real execution.
-          </p>
+          <p>It controls whether an AI-generated instruction is allowed to become real execution.</p>
         </div>
-        <div class="takeaway-ja">
+        <div>
           <strong>ADICはAIの動きを後から眺める仕組みではない。</strong>
           <p>AIの指示が、現実の実行になってよいかを事前に判定する仕組みである。</p>
         </div>
       </section>
 
-      <section class="lean-band">
-        <p>
-          The replay-verification core behind this execution gate is supported by a Lean formal proof.
-        </p>
+      <section class="lean-note">
+        <p>The replay-verification core behind this execution gate is supported by a Lean formal proof.</p>
       </section>
     </main>
-    <script src="./app.js"></script>
+
+    <script>
+      const scenarios = {
+        normal_credit_review: {
+          displayName: "Safe read-only credit check",
+          summary: "A low-risk AI suggestion remains read-only.",
+          chain: [
+            "AI suggests a credit-file lookup",
+            "ADIC confirms read-only scope",
+            "No protected banking state is changed"
+          ],
+          decision: "ALLOW",
+          decisionHeadline: "LOW-RISK READ-ONLY ACTION ALLOWED",
+          decisionSubline: "This AI instruction is limited to read-only execution.",
+          reason: "証拠チェーンが揃い、保護された銀行状態を変更しないため実行可能です。",
+          bankState: "READ-ONLY",
+          bankStateDetail: "Core banking remains unchanged after the credit check.",
+          evidence: {
+            authority: true,
+            approval: true,
+            provenance: true,
+            replay_hash: true,
+            policy_version: true
+          }
+        },
+        add_external_account: {
+          displayName: "Unauthorized external account attempt",
+          summary: "AI instruction attempts to become an external-account change.",
+          chain: [
+            "AI suggests adding an external beneficiary",
+            "ADIC checks authority and approval",
+            "Missing approval prevents execution"
+          ],
+          decision: "REJECT",
+          decisionHeadline: "NOT EXECUTABLE",
+          decisionSubline: "This AI instruction cannot become a banking operation.",
+          reason: "このAI指示は、銀行操作として実行できません。承認者・対象・期限・nonceを束縛した承認記録がありません。",
+          bankState: "UNCHANGED",
+          bankStateDetail: "No external account was added to the banking system.",
+          evidence: {
+            authority: true,
+            approval: false,
+            provenance: true,
+            replay_hash: true,
+            policy_version: true
+          }
+        },
+        change_transfer_limit: {
+          displayName: "Unauthorized limit escalation",
+          summary: "AI instruction attempts to become a transfer-limit escalation.",
+          chain: [
+            "AI suggests raising a wire-transfer limit",
+            "ADIC checks whether the actor has execution authority",
+            "Insufficient authority prevents execution"
+          ],
+          decision: "REJECT",
+          decisionHeadline: "NOT EXECUTABLE",
+          decisionSubline: "This AI instruction cannot become a banking operation.",
+          reason: "このAI/操作者に限度額変更を実行する権限がないため、銀行操作には変換されません。",
+          bankState: "UNCHANGED",
+          bankStateDetail: "The transfer limit stayed at its previous value.",
+          evidence: {
+            authority: false,
+            approval: true,
+            provenance: true,
+            replay_hash: true,
+            policy_version: true
+          }
+        },
+        approve_wire_transfer: {
+          displayName: "High-risk wire transfer attempt",
+          summary: "AI instruction attempts to become a high-risk wire transfer.",
+          chain: [
+            "AI suggests immediate wire transfer",
+            "ADIC evaluates risk and policy",
+            "Human decision is required before execution"
+          ],
+          decision: "HUMAN_REVIEW",
+          decisionHeadline: "AI CANNOT COMPLETE THIS ACTION ALONE",
+          decisionSubline: "The instruction is held before any banking change.",
+          reason: "リスク閾値を超えています。AI単独では銀行操作として完了できません。",
+          bankState: "PENDING REVIEW",
+          bankStateDetail: "No wire transfer is executed while review is pending.",
+          evidence: {
+            authority: true,
+            approval: true,
+            provenance: true,
+            replay_hash: true,
+            policy_version: true,
+            review: true
+          }
+        },
+        suspicious_chain_execution: {
+          displayName: "Compromised AI attack chain",
+          summary: "Compromised AI instruction attempts unauthorized financial execution.",
+          chain: [
+            "AI attempts to add an external account",
+            "AI attempts to raise transfer limit",
+            "AI attempts immediate wire transfer",
+            "ADIC blocks before banking-system change"
+          ],
+          decision: "REJECT",
+          decisionHeadline: "NOT EXECUTABLE",
+          decisionSubline: "This AI instruction cannot become a banking operation.",
+          reason: "このAI指示は、銀行操作として実行できません。Provenance と Replay Hash が壊れているため、実行権限に変換されません。",
+          bankState: "UNCHANGED",
+          bankStateDetail: "No account, limit, or wire-transfer change reached core banking.",
+          evidence: {
+            authority: true,
+            approval: true,
+            provenance: false,
+            replay_hash: false,
+            policy_version: true
+          }
+        }
+      };
+
+      const gateLabels = {
+        authority: ["Authority", "このAI/操作者に実行権限があるか"],
+        approval: ["Approval", "承認者・対象・期限・nonceが正しいか"],
+        provenance: ["Provenance", "この指示が正しい前段階から来たか"],
+        replay_hash: ["Replay Hash", "第三者が後から同じ条件で再検証できるか"],
+        policy_version: ["Policy Version", "どの時点のルールで止めたかを固定する"],
+        review: ["Human Review", "AI単独で完了させず、人間確認に回す"]
+      };
+
+      function gateStatus(value) {
+        return value === true ? "pass" : "fail";
+      }
+
+      function decisionClass(decision) {
+        if (decision === "ALLOW") return "allow";
+        if (decision === "HUMAN_REVIEW") return "review";
+        return "reject";
+      }
+
+      function renderScenario(id) {
+        const scenario = scenarios[id];
+        document.querySelectorAll(".scenario-button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.scenario === id);
+        });
+
+        document.getElementById("scenario-name").textContent = scenario.displayName;
+        document.getElementById("attack-summary").textContent = scenario.summary;
+
+        const chain = document.getElementById("attack-chain");
+        chain.innerHTML = "";
+        scenario.chain.forEach((step) => {
+          const li = document.createElement("li");
+          li.textContent = step;
+          chain.appendChild(li);
+        });
+
+        const gateList = document.getElementById("gate-list");
+        gateList.innerHTML = "";
+        Object.entries(scenario.evidence).forEach(([key, value]) => {
+          const status = key === "review" ? "review" : gateStatus(value);
+          const [name, detail] = gateLabels[key];
+          const mark = status === "pass" ? "OK" : status === "review" ? "RV" : "NO";
+          const row = document.createElement("div");
+          row.className = `gate ${status}`;
+          row.innerHTML = `
+            <span class="gate-mark">${mark}</span>
+            <span>
+              <span class="gate-name">${name}</span>
+              <span class="gate-detail">${detail}</span>
+            </span>
+            <span class="gate-status">${status.toUpperCase()}</span>
+          `;
+          gateList.appendChild(row);
+        });
+
+        document.getElementById("decision-label").textContent = scenario.decisionHeadline;
+        document.getElementById("decision-code").textContent = scenario.decisionHeadline;
+        document.getElementById("decision-subline").textContent = scenario.decisionSubline;
+        document.getElementById("decision-reason").textContent = scenario.reason;
+        document.getElementById("decision-card").className = `decision ${decisionClass(scenario.decision)}`;
+        document.getElementById("bank-state-label").textContent = scenario.bankState;
+        document.getElementById("bank-state-detail").textContent = scenario.bankStateDetail;
+      }
+
+      document.querySelectorAll(".scenario-button").forEach((button) => {
+        button.addEventListener("click", () => renderScenario(button.dataset.scenario));
+      });
+
+      renderScenario("suspicious_chain_execution");
+    </script>
   </body>
 </html>
